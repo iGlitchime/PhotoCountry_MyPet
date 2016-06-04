@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    width: 721px;
+    height: 248px;
+}
+
+
+.background {
+    width: 100%;
+    height: 100%;
+    background-image: url('img/bg.png');
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    background-position: center;
+}
+.action {
+    bottom: 10px;
+    width: 100px;
+    height: 100px;
+    float: left;
+    background-color: blueviolet;
+    margin: 5px;
+}
+.stars {
+    padding: 20px 60px;
+    background-image: url('img/stars.png');
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    background-position: center;
+    width: 210px;
+    color: white;
+    font-size: 21px;
+    height: 100px;
+    font-weight: 300;
+    line-height: 2;
+    text-align: right;
+}
+#points {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-weight: bolder;
+    line-height: 2;
+    font-size: 24px;
+
+}
+#pic_0 {
+    background-image: url('img/pic_1.png');
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+}
+#pic_1 {
+    background-image: url('img/pic_2.png');
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+}
+#pic_2 {
+    background-image: url('img/pic_4.png');
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+}
+.timer {
+    background-image: url('img/pic_3.png');
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+}
