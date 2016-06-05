@@ -47,7 +47,6 @@ var askForInfo = {
             e.stopPropagation(); //запрещает всплытие
             // проверка актуальности
             console.log("клик прошел!");
-            //if(clickpropagate = true){
             //пробуем достать из локСтора данные  по айди - для добавления звезд в счетчик
             console.log(answer[e.target.dataset.action].points);
             //    прописываем добавление звезд в общий счетчик
@@ -58,50 +57,51 @@ var askForInfo = {
 
             ////блокируем нажатие
             document.getElementById('pic_' + e.target.dataset.action).style.pointerEvents = "none";
-            document.getElementById('pic_' + e.target.dataset.action).style.opacity = "0.2";
+            document.getElementById('pic_' + e.target.dataset.action).style.backgroundImage = "url('css/img/timer.png')"; // подставляем картинку счетчика
             document.getElementById('pic_' + e.target.dataset.action).innerHTML = 'Timer';
             askForInfo.waitingTimer(e.target.dataset.action, relaxWait[e.target.dataset.action][1]);
-
-            //askForInfo.ActionsAfterTimer(e.target.dataset.action);
-            //askForInfo.waitingTimer(e.target.dataset.action,answer[e.target.dataset.action].recovery_time);
-            //запускаем таймер
-            //startCountdown(e.target.dataset.action);
-            //}
         }
     },
-    //ActionsAfterTimer: function (id) {
-    //    //получаем время для таймера  из ЛокСтора
-    //    //var Timer = (JSON.parse(localStorage.getItem("actionsData")))[id].recovery_time;
-    //    var Timer = 5;
-    //
-    //    console.log("таймер запущен по " + id);
-    //    //ShowTimer(id);
-    //    setTimeout(function(){
-    //        console.log("а где счетчик?!!" + id);
-    //        console.log("активируй картинку и нажатия!" + id);
-    //        document.getElementById('pic_' + id).style.pointerEvents = "auto"; //разрешаем нажатие на кнопку
-    //        document.getElementById('pic_' + id).style.opacity = "1"; //очевидно, поясняем об этом юзеру
-    //    }, Timer*1000);
-    //    console.log(Timer + " -  по айди" + id);
-    //},
     waitingTimer: function (id, Timer) {
         //Timer;
         function RecoveryTime() {
-            //relaxWait = Timer * 1000;
             if (Timer > 0) {
                 Timer--;
-                console.log(Timer);
+                console.log(convertSecToTime(Timer));
+                document.getElementById('pic_' + id).innerHTML = convertSecToTime(Timer);
                 setTimeout(RecoveryTime, 1000);
             } else {
                 document.getElementById('pic_' + id).style.pointerEvents = "auto"; //разрешаем нажатие на кнопку
-                document.getElementById('pic_' + id).style.opacity = "1"; //очевидно, поясняем об этом юзеру
-                document.getElementById('pic_' + id).innerHTML = 'PUSH';
+                document.getElementById('pic_' + id).style.backgroundImage = "url('css/img/pic_"+ id +".png')"; //очевидно, поясняем об этом юзеру
             }
         };
         RecoveryTime();
     }
 }
 
+function convertSecToTime(TimerInSeconds){
+    var convTime = "";
+    var hours = Math.floor(TimerInSeconds / (60 * 60)),
+        divisor_for_minutes = TimerInSeconds % (60 * 60),
+        minutes = Math.floor(divisor_for_minutes / 60),
+        divisor_for_seconds = divisor_for_minutes % 60,
+        seconds = Math.ceil(divisor_for_seconds);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    if(hours <=0){
+        convTime = minutes + ":" + seconds;
+    } else if(hours <=0 && minutes <= 0){
+        convTime = seconds;
+    } else if(hours <=0 && minutes <= 0 && seconds <= 0){
+        convTime = "0";
+    }else {
+        convTime = hours + ":" + minutes + ":" + seconds;
+    }
+    return convTime;
+}
 
 //осталось:
 //    прописываем вызов таймера
