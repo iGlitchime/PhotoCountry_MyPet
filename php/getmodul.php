@@ -30,7 +30,7 @@ $_SESSION['array'] = array(
 
 $_SESSION['current_score'] = 123;
 
-echo json_encode(array('current_score' => $_SESSION['current_score'], 'data' => $_SESSION['array']));
+echo json_encode(array('current_score' => $_SESSION['current_score'], 'ActionsInfo' => $_SESSION['array']));
 
 
 ?>

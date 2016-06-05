@@ -20,11 +20,21 @@ html, body {
 }
 .action {
     bottom: 10px;
-    width: 100px;
-    height: 100px;
     float: left;
-    background-color: blueviolet;
+    /*background-color: blueviolet;*/
     margin: 5px;
+    padding: 30px 15px;
+    color: white;
+    font-size: 25px;
+    text-shadow: 3px 2px 2px black;
+
+}
+.actions-block {
+    height: 59%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    display: flex;
 }
 .stars {
     padding: 20px 60px;
@@ -42,13 +52,12 @@ html, body {
     text-align: right;
 }
 #points {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 55px;
     text-align: center;
     font-weight: bolder;
     line-height: 2;
     font-size: 24px;
-
 }
 #pic_0 {
     background-image: url('img/pic_1.png');
@@ -78,7 +87,7 @@ html, body {
     height: 100px;
 }
 .timer {
-    background-image: url('img/pic_3.png');
+    background-image: url('img/timer.png');
     background-repeat: no-repeat;
     -webkit-background-size: contain;
     background-size: contain;
