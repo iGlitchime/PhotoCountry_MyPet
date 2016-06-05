@@ -13,21 +13,18 @@ function ready() {
 
 var askForInfo = {
     GetFromServer: function () {
+        //посылаем запрос на сервер для получения данных
         sendRequest("/test/PhotoCountry/php/getmodul.php", testCallback);
     },
     workWithInfo: function (answer) {   //обрабатываем полученный json
         //определяем элемент, в который будем добавлять кноки с действиями
         var Actions = document.getElementById('actions-block');
-        //document.getElementById('points').innerHTML = "START";
         Actions.innerHTML = "";
         var A = '';
         for (var i = 0; i < answer.length; i++) {
-            //console.log(answer[i]);
-            //отправляем на отрисовку кнопки и заголовок
-            //A += '<div class="action" id="pic_' + i + '" data-action="' + i + '"><div class="timer' + i + '">' + answer[i].title + '</div></div>';
+            //отрисовываем кнопки действий питомца
             A += '<div class="action" id="pic_' + i + '" data-action="' + i + '"></div>';
-
-            console.log("data-action= " + i);
+            //записываем в массив счетчиков данные по каждому действию - айди и время ожидания
             relaxWait.push([i, answer[i].recovery_time]);
 
         }
@@ -37,10 +34,11 @@ var askForInfo = {
         //делаем выборку для клика по всем уже отрисованным кнопкам
         var actionEls = document.querySelectorAll('.action');
 
-        //пробегаемся по всем кнопкам отрисованными по массиву
+        //пробегаемся по всему массиву отрисованных кнопок для определения ивента нажатия одной из них
         for (var i = 0; i < actionEls.length; i++) {
             //вешаем событие
             new Tap(actionEls[i]);
+            //определяем действие по нажатию
             actionEls[i].addEventListener('tap', ActionTap, false);
         }
         //описываем действие по событию
@@ -49,9 +47,7 @@ var askForInfo = {
             e.stopPropagation(); //запрещает всплытие
             // проверка актуальности
             console.log("клик прошел!");
-            console.log(e);
             console.log(e.target);
-            console.log(e.target.dataset);
             console.log(e.target.dataset.action);
             console.log(answer[e.target.dataset.action]);
             //пробуем достать данные по айди (дублировали в data-set) - для добавления звезд в счетчик
@@ -62,38 +58,47 @@ var askForInfo = {
             //прописываем отображение количества звезд
             document.getElementById('points').innerHTML = countAllTaps;
 
-            ////блокируем нажатие
+            //блокируем нажатие и заменяем иконку действия на иконку ожидания (часы)
             document.getElementById('pic_' + e.target.dataset.action).style.pointerEvents = "none";
             document.getElementById('pic_' + e.target.dataset.action).style.backgroundImage = "url('css/img/timer.png')"; // подставляем картинку счетчика
+            //вызываем функцию таймера обратного отсчета
             askForInfo.waitingTimer(e.target.dataset.action, relaxWait[e.target.dataset.action][1]);
         }
     //}
     },
     waitingTimer: function (id, Timer) {
-        //Timer;
+        //рекурсивный таймер, для отображения остаточного времени (recovery_Time) юзеру
         function RecoveryTime() {
             if (Timer > 0) {
                 Timer--;
-                console.log(convertSecToTime(Timer));
+                console.log(convertSecToTime(Timer)); //проверка в консоли
+
+                //отображение счетчика для юзера
                 document.getElementById('pic_' + id).innerHTML = convertSecToTime(Timer);
+                //перезапускаем счетчик каждую секунду
                 setTimeout(RecoveryTime, 1000);
             } else {
+                //как только счетчик заканчивается, возвращаем кнопкам действий возможность клика
+                // и изначальную картинку
                 document.getElementById('pic_' + id).style.pointerEvents = "auto"; //разрешаем нажатие на кнопку
                 document.getElementById('pic_' + id).style.backgroundImage = "url('css/img/pic_"+ id +".png')"; //очевидно, поясняем об этом юзеру
             }
         };
+        //вызываем счетчик обратного таймера
         RecoveryTime();
     }
 }
 
+//конвертация общего количество секунд
 function convertSecToTime(TimerInSeconds){
     var convTime = "";
-    var hours = Math.floor(TimerInSeconds / (60 * 60)),
+    var hours = Math.floor(TimerInSeconds / (60 * 60)), //округляем до ближайшего целого числа
         divisor_for_minutes = TimerInSeconds % (60 * 60),
-        minutes = Math.floor(divisor_for_minutes / 60),
+        minutes = Math.floor(divisor_for_minutes / 60), //округляем до ближайшего целого числа
         divisor_for_seconds = divisor_for_minutes % 60,
-        seconds = Math.ceil(divisor_for_seconds);
+        seconds = Math.ceil(divisor_for_seconds); //округляем до ближайшего целого числа
 
+    //корректируем отображение таймера при различных условиях
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
@@ -109,11 +114,4 @@ function convertSecToTime(TimerInSeconds){
     }
     return convTime;
 }
-
-//осталось:
-//    прописываем вызов таймера
-//    прописываем активацию кнопки
-//    отрисовываем таймер
-
-
 document.addEventListener('DOMContentLoaded', ready, false);
