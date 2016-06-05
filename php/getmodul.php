@@ -28,7 +28,9 @@ $_SESSION['array'] = array(
         'points' => 30)
     );
 
-echo json_encode($_SESSION['array']);
+$_SESSION['current_score'] = 123;
+
+echo json_encode(array('current_score' => $_SESSION['current_score'], 'data' => $_SESSION['array']));
 
 
 ?>

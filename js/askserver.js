@@ -21,7 +21,9 @@ function testCallback(responseText)
 	console.log(JSON.parse(responseText));
 	ANSWER = JSON.parse(responseText);
 	localStorage.setItem("actionsData", JSON.stringify(ANSWER));
-	askForInfo.workWithInfo(ANSWER);
+	askForInfo.workWithInfo(ANSWER.data);
+	countAllTaps = ANSWER.current_score;
+
 }
 
 
